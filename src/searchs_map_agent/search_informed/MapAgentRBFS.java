@@ -5,8 +5,6 @@ import aima.core.environment.map.MapFunctions;
 import aima.core.environment.map.MoveToAction;
 import aima.core.environment.map.SimplifiedRoadMapOfRomania;
 import aima.core.search.framework.SearchForActions;
-import aima.core.search.framework.qsearch.GraphSearch;
-import aima.core.search.informed.EvaluationFunction;
 import aima.core.search.informed.RecursiveBestFirstSearch;
 import searchs_map_agent.MapAgentBase;
 
@@ -18,7 +16,7 @@ public class MapAgentRBFS extends MapAgentBase{
 		String destination = SimplifiedRoadMapOfRomania.BUCHAREST;
 		
 		SearchForActions<String, MoveToAction> search;
-		search = new RecursiveBestFirstSearch<>();
+		search = new RecursiveBestFirstSearch<>(createEvalFn(MapFunctions.createSLDHeuristicFunction(destination, map)));
 		searchs(search,destination,map);
 	}
 }

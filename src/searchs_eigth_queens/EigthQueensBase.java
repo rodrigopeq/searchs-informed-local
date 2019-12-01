@@ -6,17 +6,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
 
 import aima.core.environment.nqueens.NQueensBoard;
 import aima.core.environment.nqueens.NQueensFunctions;
 import aima.core.environment.nqueens.NQueensGenAlgoUtil;
 import aima.core.environment.nqueens.QueenAction;
 import aima.core.environment.nqueens.NQueensBoard.Config;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
 import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.informed.AStarSearch;
+import aima.core.search.informed.BestFirstSearch;
+import aima.core.search.informed.EvaluationFunction;
 import aima.core.search.informed.GreedyBestFirstSearch;
+import aima.core.search.informed.RecursiveBestFirstSearch;
 import aima.core.search.local.FitnessFunction;
 import aima.core.search.local.GeneticAlgorithm;
 import aima.core.search.local.HillClimbingSearch;
@@ -35,6 +40,28 @@ final private static int numberQueens = 8;
 				(numberQueens, Config.QUEENS_IN_FIRST_ROW);
 		SearchForActions<NQueensBoard, QueenAction> search = new AStarSearch<>
 				(new GraphSearch<>(), NQueensFunctions::getNumberOfAttackingPairs);
+		Optional<List<QueenAction>> actions = search.findActions(problem);
+
+		actions.ifPresent(qActions -> qActions.forEach(System.out::println));
+		System.out.println(search.getMetrics());
+	}
+	
+	public static void solveNQueensWithBestFirstSearch() {
+		Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createCompleteStateFormulationProblem
+				(numberQueens, Config.QUEENS_IN_FIRST_ROW);
+		SearchForActions<NQueensBoard, QueenAction> search = new BestFirstSearch<>
+				(new GraphSearch<>(), createEvalFn(NQueensFunctions::getNumberOfAttackingPairs));
+		Optional<List<QueenAction>> actions = search.findActions(problem);
+
+		actions.ifPresent(qActions -> qActions.forEach(System.out::println));
+		System.out.println(search.getMetrics());
+	}
+	
+	public static void solveNQueensWithRecursiveBestFirstSearch() {
+		Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createCompleteStateFormulationProblem
+				(numberQueens, Config.QUEENS_IN_FIRST_ROW);
+		SearchForActions<NQueensBoard, QueenAction> search = new RecursiveBestFirstSearch<>
+				(createEvalFn(NQueensFunctions::getNumberOfAttackingPairs));
 		Optional<List<QueenAction>> actions = search.findActions(problem);
 
 		actions.ifPresent(qActions -> qActions.forEach(System.out::println));
@@ -123,4 +150,13 @@ final private static int numberQueens = 8;
 		System.out.println(search.getMetrics());
 		System.out.println("Final State:\n" + search.getLastState());
 	}
+	
+	public static <S, A> EvaluationFunction<S, A> createEvalFn(ToDoubleFunction<Node<S, A>> h) {
+        return new EvaluationFunction<S, A>(h) {
+            @Override
+            public double applyAsDouble(Node<S, A> node) {
+                return node.getPathCost() + this.h.applyAsDouble(node);
+            }
+        };
+    }
 }

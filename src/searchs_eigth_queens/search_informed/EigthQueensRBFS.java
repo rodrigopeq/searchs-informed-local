@@ -1,5 +1,10 @@
 package searchs_eigth_queens.search_informed;
 
-public class EigthQueensRBFS {
-ssssss
+import searchs_eigth_queens.EigthQueensBase;
+
+
+public class EigthQueensRBFS extends EigthQueensBase{
+	public static void main(String[] args) {
+		solveNQueensWithRecursiveBestFirstSearch();
+	}
 }

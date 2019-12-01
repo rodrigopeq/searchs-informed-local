@@ -1,5 +1,7 @@
 package searchs_map_agent;
 
+import java.util.function.ToDoubleFunction;
+
 import aima.core.agent.Agent;
 import aima.core.agent.EnvironmentListener;
 import aima.core.agent.impl.DynamicPercept;
@@ -10,7 +12,9 @@ import aima.core.environment.map.MapEnvironment;
 import aima.core.environment.map.MoveToAction;
 import aima.core.environment.map.SimpleMapAgent;
 import aima.core.environment.map.SimplifiedRoadMapOfRomania;
+import aima.core.search.framework.Node;
 import aima.core.search.framework.SearchForActions;
+import aima.core.search.informed.EvaluationFunction;
 
 public abstract class MapAgentBase {
 
@@ -44,4 +48,13 @@ public abstract class MapAgentBase {
 		env.stepUntilDone();
 		envView.notify(search.getMetrics().toString());
 	}
+	
+	public static <S, A> EvaluationFunction<S, A> createEvalFn(ToDoubleFunction<Node<S, A>> h) {
+        return new EvaluationFunction<S, A>(h) {
+            @Override
+            public double applyAsDouble(Node<S, A> node) {
+                return node.getPathCost() + this.h.applyAsDouble(node);
+            }
+        };
+    }
 }
