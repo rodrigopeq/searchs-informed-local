@@ -32,10 +32,7 @@ import aima.core.search.local.SimulatedAnnealingSearch;
 public class EigthQueensBase {
 final private static int numberQueens = 8;
 	
-	
 	public static void solveNQueensWithAStarSearch() {
-		System.out.println("\n--- NQueensDemo A* (complete state formulation, graph search 3e) ---");
-
 		Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createCompleteStateFormulationProblem
 				(numberQueens, Config.QUEENS_IN_FIRST_ROW);
 		SearchForActions<NQueensBoard, QueenAction> search = new AStarSearch<>
@@ -69,8 +66,6 @@ final private static int numberQueens = 8;
 	}
 	
 	public static void solveNQueensWithGreedyBestFirstSearch() {
-		System.out.println("\n--- EigthQueens GreedyBestFirstSearch ---");
-
 		Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createCompleteStateFormulationProblem
 				(numberQueens, Config.QUEENS_IN_FIRST_ROW);
 		SearchForActions<NQueensBoard, QueenAction> search = new GreedyBestFirstSearch<>
@@ -82,19 +77,13 @@ final private static int numberQueens = 8;
 	}
 	
 	public static void solveNQueensWithGeneticAlgorithmSearch() {
-		System.out.println("\n--- NQueensDemo GeneticAlgorithm ---");
-
 		FitnessFunction<Integer> fitnessFunction = NQueensGenAlgoUtil.getFitnessFunction();
 		Predicate<Individual<Integer>> goalTest = NQueensGenAlgoUtil.getGoalTest();
-		// Generate an initial population
 		Set<Individual<Integer>> population = new HashSet<>();
 		for (int i = 0; i < 50; i++)
 			population.add(NQueensGenAlgoUtil.generateRandomIndividual(numberQueens));
-
 		GeneticAlgorithm<Integer> ga = new GeneticAlgorithm<>(numberQueens,
 				NQueensGenAlgoUtil.getFiniteAlphabetForBoardOfSize(numberQueens), 0.15);
-
-		// Run for a set amount of time
 		Individual<Integer> bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 1000L);
 		System.out.println("Max time 1 second, Best Individual:\n"
 				+ NQueensGenAlgoUtil.getBoardForIndividual(bestIndividual));
@@ -105,8 +94,6 @@ final private static int numberQueens = 8;
 		System.out.println("Population Size = " + ga.getPopulationSize());
 		System.out.println("Iterations      = " + ga.getIterations());
 		System.out.println("Took            = " + ga.getTimeInMilliseconds() + "ms.");
-
-		// Run till goal is achieved
 		bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 0L);
 		System.out.println("");
 		System.out.println("Max time unlimited, Best Individual:\n" +

@@ -30,7 +30,6 @@ public class EightPuzzleBase {
 			new EightPuzzleBoard(new int[] { 1, 4, 2, 7, 5, 8, 3, 0, 6 });
 	
 	public static void eightPuzzleGreedyBestFirstDemo() {
-		System.out.println("\nEightPuzzleDemo Greedy Best First Search (MisplacedTileHeursitic)");
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(boardWithThreeMoveSolution);
 			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
@@ -44,7 +43,6 @@ public class EightPuzzleBase {
 	}
 	
 	public static void eightPuzzleAStarDemo() {
-		System.out.println("\nEightPuzzleDemo AStar Search (MisplacedTileHeursitic)");
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
@@ -58,7 +56,6 @@ public class EightPuzzleBase {
 	}
 	
 	public static void eightPuzzleHillClimbingSearch() {
-		System.out.println("\n--- nEightPuzzleDemo HillClimbing ---");
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			HillClimbingSearch<EightPuzzleBoard, Action> search = new HillClimbingSearch<>
@@ -73,7 +70,6 @@ public class EightPuzzleBase {
 	}
 
 	public static void eightPuzzleSimulatedAnnealingDemo() {
-		System.out.println("\nEightPuzzleDemo Simulated Annealing Search");
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
 			SimulatedAnnealingSearch<EightPuzzleBoard, Action> search = new SimulatedAnnealingSearch<>
