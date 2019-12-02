@@ -7,4 +7,3 @@ public class EightPuzzleBFS extends EightPuzzleBase {
 		eightPuzzleBestFirstSearch();
 	}
 }
-

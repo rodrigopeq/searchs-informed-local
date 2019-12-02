@@ -8,17 +8,15 @@ import aima.core.search.framework.SearchForActions;
 import aima.core.search.local.SimulatedAnnealingSearch;
 import searchs_map_agent.MapAgentBase;
 
-public class MapAgentSAS extends MapAgentBase{
+public class MapAgentSAS extends MapAgentBase {
 	public static void main(String[] args) {
 		ExtendableMap map = new ExtendableMap();
 		SimplifiedRoadMapOfRomania.initMap(map);
 
 		String destination = SimplifiedRoadMapOfRomania.BUCHAREST;
-		
+
 		SearchForActions<String, MoveToAction> search;
 		search = new SimulatedAnnealingSearch<>(MapFunctions.createSLDHeuristicFunction(destination, map));
-		searchs(search,destination,map);
+		searchs(search, destination, map);
 	}
 }
-
-

@@ -15,9 +15,10 @@ public class MapAgentBFS extends MapAgentBase {
 		SimplifiedRoadMapOfRomania.initMap(map);
 
 		String destination = SimplifiedRoadMapOfRomania.BUCHAREST;
-		
+
 		SearchForActions<String, MoveToAction> search;
-		search = new BestFirstSearch<>(new GraphSearch<>(), createEvalFn(MapFunctions.createSLDHeuristicFunction(destination, map)));
-		searchs(search,destination,map);
-	}	
+		search = new BestFirstSearch<>(new GraphSearch<>(),
+				createEvalFn(MapFunctions.createSLDHeuristicFunction(destination, map)));
+		searchs(search, destination, map);
+	}
 }

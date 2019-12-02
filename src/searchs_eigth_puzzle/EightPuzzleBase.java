@@ -22,21 +22,17 @@ import aima.core.search.local.HillClimbingSearch;
 import aima.core.search.local.SimulatedAnnealingSearch;
 
 public abstract class EightPuzzleBase {
-	
-//	private static EightPuzzleBoard boardWithThreeMoveSolution =
-//			new EightPuzzleBoard(new int[] { 1, 2, 5, 3, 4, 0, 6, 7, 8 });
-	
-	private static EightPuzzleBoard boardWithThreeMoveSolution =
-			new EightPuzzleBoard(new int[] { 0, 2, 8, 3, 1, 5, 6, 7, 4 });
 
-	private static EightPuzzleBoard random1 =
-			new EightPuzzleBoard(new int[] { 1, 4, 2, 7, 5, 8, 3, 0, 6 });
-	
+	private static EightPuzzleBoard boardWithThreeMoveSolution = new EightPuzzleBoard(
+			new int[] { 0, 2, 8, 3, 1, 5, 6, 7, 4 });
+
+	private static EightPuzzleBoard random1 = new EightPuzzleBoard(new int[] { 1, 4, 2, 7, 5, 8, 3, 0, 6 });
+
 	public static void eightPuzzleGreedyBestFirstDemo() {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(boardWithThreeMoveSolution);
-			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>
-					(new GraphSearch<>(), EightPuzzleFunctions::getNumberOfMisplacedTiles);
+			SearchForActions<EightPuzzleBoard, Action> search = new GreedyBestFirstSearch<>(new GraphSearch<>(),
+					EightPuzzleFunctions::getNumberOfMisplacedTiles);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -44,12 +40,12 @@ public abstract class EightPuzzleBase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void eightPuzzleAStarDemo() {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
-			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
-					(new GraphSearch<>(), EightPuzzleFunctions::getNumberOfMisplacedTiles);
+			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>(new GraphSearch<>(),
+					EightPuzzleFunctions::getNumberOfMisplacedTiles);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -57,12 +53,12 @@ public abstract class EightPuzzleBase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void eightPuzzleHillClimbingSearch() {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
-			HillClimbingSearch<EightPuzzleBoard, Action> search = new HillClimbingSearch<>
-					(EightPuzzleFunctions::getManhattanDistance);
+			HillClimbingSearch<EightPuzzleBoard, Action> search = new HillClimbingSearch<>(
+					EightPuzzleFunctions::getManhattanDistance);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			System.out.println("Final State:\n" + search.getLastState());
@@ -70,13 +66,13 @@ public abstract class EightPuzzleBase {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}	
+	}
 
 	public static void eightPuzzleSimulatedAnnealingDemo() {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
-			SimulatedAnnealingSearch<EightPuzzleBoard, Action> search = new SimulatedAnnealingSearch<>
-					(EightPuzzleFunctions::getManhattanDistance);
+			SimulatedAnnealingSearch<EightPuzzleBoard, Action> search = new SimulatedAnnealingSearch<>(
+					EightPuzzleFunctions::getManhattanDistance);
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			System.out.println("Final State:\n" + search.getLastState());
@@ -85,11 +81,12 @@ public abstract class EightPuzzleBase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void eightPuzzleBestFirstSearch() {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
-			SearchForActions<EightPuzzleBoard, Action> search = new BestFirstSearch<>(new GraphSearch<>(),createEvalHn(EightPuzzleFunctions::getNumberOfMisplacedTiles));
+			SearchForActions<EightPuzzleBoard, Action> search = new BestFirstSearch<>(new GraphSearch<>(),
+					createEvalHn(EightPuzzleFunctions::getNumberOfMisplacedTiles));
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -97,11 +94,12 @@ public abstract class EightPuzzleBase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void eightPuzzleRecursiveBestFirstSearch() {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
-			SearchForActions<EightPuzzleBoard, Action> search = new RecursiveBestFirstSearch<>(createEvalFn(EightPuzzleFunctions::getNumberOfMisplacedTiles));
+			SearchForActions<EightPuzzleBoard, Action> search = new RecursiveBestFirstSearch<>(
+					createEvalFn(EightPuzzleFunctions::getNumberOfMisplacedTiles));
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -109,7 +107,7 @@ public abstract class EightPuzzleBase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void printInstrumentation(Properties properties) {
 		properties.keySet().stream().map(key -> key + "=" + properties.get(key)).forEach(System.out::println);
 	}
@@ -117,23 +115,22 @@ public abstract class EightPuzzleBase {
 	private static void printActions(List<Action> actions) {
 		actions.forEach(System.out::println);
 	}
-	
-	public static <S, A> EvaluationFunction<S, A> createEvalFn(ToDoubleFunction<Node<S, A>> h) {
-        return new EvaluationFunction<S, A>(h) {
-            @Override
-            public double applyAsDouble(Node<S, A> node) {
-                return node.getPathCost() + this.h.applyAsDouble(node);
-            }
-        };
-    }
-	
-	public static <S, A> EvaluationFunction<S, A> createEvalHn(ToDoubleFunction<Node<S, A>> h) {
-        return new EvaluationFunction<S, A>(h) {
-            @Override
-            public double applyAsDouble(Node<S, A> node) {
-                return this.h.applyAsDouble(node);
-            }
-        };
-    }
-}
 
+	public static <S, A> EvaluationFunction<S, A> createEvalFn(ToDoubleFunction<Node<S, A>> h) {
+		return new EvaluationFunction<S, A>(h) {
+			@Override
+			public double applyAsDouble(Node<S, A> node) {
+				return node.getPathCost() + this.h.applyAsDouble(node);
+			}
+		};
+	}
+
+	public static <S, A> EvaluationFunction<S, A> createEvalHn(ToDoubleFunction<Node<S, A>> h) {
+		return new EvaluationFunction<S, A>(h) {
+			@Override
+			public double applyAsDouble(Node<S, A> node) {
+				return this.h.applyAsDouble(node);
+			}
+		};
+	}
+}

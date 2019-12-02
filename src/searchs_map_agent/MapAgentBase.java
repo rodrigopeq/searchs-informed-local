@@ -18,7 +18,8 @@ import aima.core.search.informed.EvaluationFunction;
 
 public abstract class MapAgentBase {
 
-	protected static void searchs(SearchForActions<String, MoveToAction> search, String destination, ExtendableMap map ) {
+	protected static void searchs(SearchForActions<String, MoveToAction> search, String destination,
+			ExtendableMap map) {
 
 		Agent<DynamicPercept, MoveToAction> agent;
 
@@ -48,22 +49,22 @@ public abstract class MapAgentBase {
 		env.stepUntilDone();
 		envView.notify(search.getMetrics().toString());
 	}
-	
+
 	public static <S, A> EvaluationFunction<S, A> createEvalFn(ToDoubleFunction<Node<S, A>> h) {
-        return new EvaluationFunction<S, A>(h) {
-            @Override
-            public double applyAsDouble(Node<S, A> node) {
-                return node.getPathCost() + this.h.applyAsDouble(node);
-            }
-        };
-    }
-	
+		return new EvaluationFunction<S, A>(h) {
+			@Override
+			public double applyAsDouble(Node<S, A> node) {
+				return node.getPathCost() + this.h.applyAsDouble(node);
+			}
+		};
+	}
+
 	public static <S, A> EvaluationFunction<S, A> createEvalHn(ToDoubleFunction<Node<S, A>> h) {
-        return new EvaluationFunction<S, A>(h) {
-            @Override
-            public double applyAsDouble(Node<S, A> node) {
-                return this.h.applyAsDouble(node);
-            }
-        };
-    }
+		return new EvaluationFunction<S, A>(h) {
+			@Override
+			public double applyAsDouble(Node<S, A> node) {
+				return this.h.applyAsDouble(node);
+			}
+		};
+	}
 }

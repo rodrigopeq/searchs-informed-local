@@ -9,15 +9,15 @@ import aima.core.search.framework.qsearch.GraphSearch;
 import aima.core.search.informed.AStarSearch;
 import searchs_map_agent.MapAgentBase;
 
-public class MapAgentAStar extends MapAgentBase{
+public class MapAgentAStar extends MapAgentBase {
 	public static void main(String[] args) {
 		ExtendableMap map = new ExtendableMap();
 		SimplifiedRoadMapOfRomania.initMap(map);
 
 		String destination = SimplifiedRoadMapOfRomania.BUCHAREST;
-		
+
 		SearchForActions<String, MoveToAction> search;
 		search = new AStarSearch<>(new GraphSearch<>(), MapFunctions.createSLDHeuristicFunction(destination, map));
-		searchs(search,destination,map);
+		searchs(search, destination, map);
 	}
 }
