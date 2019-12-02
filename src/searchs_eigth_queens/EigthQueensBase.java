@@ -115,7 +115,7 @@ final private static int numberQueens = 8;
 		HillClimbingSearch<NQueensBoard, QueenAction> search = new HillClimbingSearch<>
 				(n -> -NQueensFunctions.getNumberOfAttackingPairs(n));
 		Optional<List<QueenAction>> actions = search.findActions(problem);
-
+		
 		actions.ifPresent(qActions -> qActions.forEach(System.out::println));
 		System.out.println(search.getMetrics());
 		System.out.println("Final State:\n" + search.getLastState());
