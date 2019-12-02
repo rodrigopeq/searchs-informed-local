@@ -1,3 +1,5 @@
+
+
 package searchs_map_agent.search_local;
 
 import aima.core.environment.map.ExtendableMap;

@@ -57,4 +57,13 @@ public abstract class MapAgentBase {
             }
         };
     }
+	
+	public static <S, A> EvaluationFunction<S, A> createEvalHn(ToDoubleFunction<Node<S, A>> h) {
+        return new EvaluationFunction<S, A>(h) {
+            @Override
+            public double applyAsDouble(Node<S, A> node) {
+                return this.h.applyAsDouble(node);
+            }
+        };
+    }
 }

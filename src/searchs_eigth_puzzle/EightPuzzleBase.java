@@ -21,10 +21,13 @@ import aima.core.search.informed.RecursiveBestFirstSearch;
 import aima.core.search.local.HillClimbingSearch;
 import aima.core.search.local.SimulatedAnnealingSearch;
 
-public class EightPuzzleBase {
+public abstract class EightPuzzleBase {
+	
+//	private static EightPuzzleBoard boardWithThreeMoveSolution =
+//			new EightPuzzleBoard(new int[] { 1, 2, 5, 3, 4, 0, 6, 7, 8 });
 	
 	private static EightPuzzleBoard boardWithThreeMoveSolution =
-			new EightPuzzleBoard(new int[] { 1, 2, 5, 3, 4, 0, 6, 7, 8 });
+			new EightPuzzleBoard(new int[] { 0, 2, 8, 3, 1, 5, 6, 7, 4 });
 
 	private static EightPuzzleBoard random1 =
 			new EightPuzzleBoard(new int[] { 1, 4, 2, 7, 5, 8, 3, 0, 6 });
@@ -67,7 +70,7 @@ public class EightPuzzleBase {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}	
 
 	public static void eightPuzzleSimulatedAnnealingDemo() {
 		try {
@@ -86,7 +89,7 @@ public class EightPuzzleBase {
 	public static void eightPuzzleBestFirstSearch() {
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
-			SearchForActions<EightPuzzleBoard, Action> search = new BestFirstSearch<>(new GraphSearch<>(),createEvalFn(EightPuzzleFunctions::getNumberOfMisplacedTiles));
+			SearchForActions<EightPuzzleBoard, Action> search = new BestFirstSearch<>(new GraphSearch<>(),createEvalHn(EightPuzzleFunctions::getNumberOfMisplacedTiles));
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
@@ -120,6 +123,15 @@ public class EightPuzzleBase {
             @Override
             public double applyAsDouble(Node<S, A> node) {
                 return node.getPathCost() + this.h.applyAsDouble(node);
+            }
+        };
+    }
+	
+	public static <S, A> EvaluationFunction<S, A> createEvalHn(ToDoubleFunction<Node<S, A>> h) {
+        return new EvaluationFunction<S, A>(h) {
+            @Override
+            public double applyAsDouble(Node<S, A> node) {
+                return this.h.applyAsDouble(node);
             }
         };
     }

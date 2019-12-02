@@ -29,7 +29,7 @@ import aima.core.search.local.Individual;
 import aima.core.search.local.Scheduler;
 import aima.core.search.local.SimulatedAnnealingSearch;
 
-public class EigthQueensBase {
+public abstract class EigthQueensBase {
 final private static int numberQueens = 8;
 	
 	public static void solveNQueensWithAStarSearch() {
@@ -47,7 +47,7 @@ final private static int numberQueens = 8;
 		Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createCompleteStateFormulationProblem
 				(numberQueens, Config.QUEENS_IN_FIRST_ROW);
 		SearchForActions<NQueensBoard, QueenAction> search = new BestFirstSearch<>
-				(new GraphSearch<>(), createEvalFn(NQueensFunctions::getNumberOfAttackingPairs));
+				(new GraphSearch<>(), createEvalHn(NQueensFunctions::getNumberOfAttackingPairs));
 		Optional<List<QueenAction>> actions = search.findActions(problem);
 
 		actions.ifPresent(qActions -> qActions.forEach(System.out::println));
@@ -143,6 +143,15 @@ final private static int numberQueens = 8;
             @Override
             public double applyAsDouble(Node<S, A> node) {
                 return node.getPathCost() + this.h.applyAsDouble(node);
+            }
+        };
+    }
+	
+	public static <S, A> EvaluationFunction<S, A> createEvalHn(ToDoubleFunction<Node<S, A>> h) {
+        return new EvaluationFunction<S, A>(h) {
+            @Override
+            public double applyAsDouble(Node<S, A> node) {
+                return this.h.applyAsDouble(node);
             }
         };
     }
